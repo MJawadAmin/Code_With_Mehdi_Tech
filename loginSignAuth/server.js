@@ -15,7 +15,7 @@ const MONGO_CONN= process.env.MONGO_URL
 
 mongoose.connect(MONGO_CONN)
 .then(()=>(console.log("DB are connecting succesfully ")))
-.catch(()=>(console.log("Connection Error ")))
+.catch(()=>(console.log("Connection Error  ")))
 
 
 app.listen(PORT, ()=>{
