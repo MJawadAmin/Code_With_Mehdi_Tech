@@ -1,0 +1,13 @@
+@import "tailwindcss";
+.font{
+    font-family:ui-sans-serif, system-ui, sans-serif ;
+    font-style: normal;
+    font-weight: 700;
+    color:rgb(13, 38, 59) ;
+    line-height: 48px;
+}
+.normal_font{
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+}
