@@ -4,6 +4,9 @@ import Home from './components/pages/Home';
 import AboutUs from './components/pages/AboutUs';
 import OurServices from './components/pages/OurServices';
 import ExpertizePage from './components/pages/ExpertizePage';
+import FeatureListening from './components/pages/FeatureListening';
+import CarouselPage  from './components/pages/CarouselPage';
+import Footer from './components/pages/Footer';
 
 function App() {
   return (
@@ -14,6 +17,9 @@ function App() {
       <AboutUs/>
       <OurServices/>
       <ExpertizePage/>
+      <FeatureListening/>
+      <CarouselPage/>
+      <Footer/>
     </Router>
   );
 }

@@ -5,7 +5,7 @@ const router = express.Router()
 
 
 router.post('/create', addAgent);
-router.get('/remove', removeAgent);
+router.delete('/remove/:id', removeAgent);
 router.put('update', updateAgent);
 router.get('/fetch', fetchAgents)
 
