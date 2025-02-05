@@ -70,7 +70,7 @@ export const updateAgent = async ( req, res) => {
             await agent.save();
             return res.status(200).json({
                 status: 'succeed',
-                message: 'Agent updated succesfully'
+                message: 'Agent data updated succesfully'
             })
         }
     }catch(error){
