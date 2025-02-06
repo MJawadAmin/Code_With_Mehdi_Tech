@@ -7,8 +7,8 @@ import svgImage from '/svgImage.svg'
 
 const ExpertizePage = () => {
 
-    const [agents, setAgents] = useState([]);
-    const [error, setError]= useState(false)
+   const [agents, setAgents] = useState([]);
+  
 
 
     useEffect(()=>{
@@ -32,9 +32,9 @@ const ExpertizePage = () => {
 
     // Testing by logging data in agents
     useEffect(()=> {
-        console.log('Agents', agents);
+        console.log('Agents');
     },[agents])
-
+ 
     const AgentsDataObject= [
         {
             image:"AgentImage.png",
@@ -67,34 +67,37 @@ const ExpertizePage = () => {
     ]
   return (
     <div>
-        <div className='p-32 h-auto lg:h-[100vh]'>
-            <div className='text-center '>
+        <div className='p-32 h-auto lg:h-[100vh] '>
+            <div className='text-center  '>
             <p className='text-blue-500'>Expertize here </p>
             <h1 className='font text-3xl'>our Growing Agents</h1>
             </div>
            
             
 
-                {/*  Database connected 
+                 Database connected 
+                 <div className=' lg:flex gap-6 items-center h-[100vh] md:overflow-y-scroll lg:overflow-x-scroll lg:flex-row '>
                 {agents.map((services, index)=>(
-                    <div key={index} className='relative'>
+                    <div key={index} className='relative '>
                         <img src="AgentImage.png" alt="img" />
                         <div className='absolute bottom-40  text-blue-500'>
                         <h2>{services.experience}</h2> 
                         </div>
                         <div className='p-6 '> 
                             <h1 className='font text-2xl'>{services.name}</h1>
-                            <h3>{services.company}</h3>
+                            <h3 >{services.company}</h3>
                             <h3 className='font-semibold text-gray-400 flex items-center'><IoCallOutline className='text-blue-600' />Call:{services.number}</h3></div>
 
 
                     </div>
                 ))
-                    
-                } */}
+                   
+                
+                }
+                 </div>  </div></div>
 
 
-<div className="flex flex-wrap justify-center gap-6 px-6 sm:px-10 md:px-16 lg:px-32">
+/* <div className="flex flex-wrap justify-center gap-6 px-6 sm:px-10 md:px-16 lg:px-32">
     {AgentsDataObject.map((services, index) => (
         <div key={index} className="relative w-full sm:w-1/2 md:w-1/3 lg:w-auto">
             <img src={services.image} alt="img" className="w-full h-auto rounded-lg" />
@@ -129,7 +132,7 @@ const ExpertizePage = () => {
 
       </div>      
       
-    </div>
+    </div> */
   )
 }
 

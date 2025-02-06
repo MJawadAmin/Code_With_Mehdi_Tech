@@ -1,3 +1,7 @@
+
+
+
+
 import mongoose from "mongoose";
 const cardSchema= new mongoose.Schema({
     stataimage :{
@@ -41,7 +45,7 @@ const cardSchema= new mongoose.Schema({
         require: true
     },
     stateprice:{
-        type: Number,
+        type:String,
         require: true
     },
    
