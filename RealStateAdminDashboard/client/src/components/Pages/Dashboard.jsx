@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { CiSearch } from "react-icons/ci";
 import axios from 'axios'; // Ensure AddCard component exists
+import Sidebar from './Sidebar';
+import AddCard from './Cardform';
+
+
+
 
 const Dashboard = () => {
     const [cards, setCards] = useState([]);
@@ -50,10 +55,11 @@ const Dashboard = () => {
     };
 
     return (
-        <div className='bg-sky-100 p-5'>
+        <div> <Sidebar/>
 
             {/*Search Input */}
-            <div className="relative w-96 mb-6">
+            <div className="relative w-96 mb-6 mx-auto ">
+             
                 <input
                     type="search"
                     className="h-10 w-full pl-10 pr-4 rounded-3xl bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -63,7 +69,7 @@ const Dashboard = () => {
             </div>
 
             {/*  Property Listings */}
-            <h1 className='text-3xl font-bold mb-4'>Properties</h1>
+            <h1 className='text-3xl font-bold mb-4 text-center'>Properties</h1>
 
             <div className=' flex flex-col items-center justify-center relative'>
                 {/* ➕ Add States Button */}
@@ -74,6 +80,7 @@ const Dashboard = () => {
                 {/*  AddCard Modal */}
                 {isOpen && (
                     <div className='absolute top-0 z-50 flex flex-col items-center bg-white p-5 shadow-lg'>
+                      <AddCard/>
                         
                         <button onClick={toggleButton} className='rounded-xl bg-red-400 px-5 py-3 z-50 mt-2'>Back</button>
                     </div>
