@@ -1,0 +1,188 @@
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import Dashboard from './pages/Dashboard';
+import Login from './pages/Login';
+import Listings from './pages/Listings';
+import EditListing from './pages/EditListing';
+import CreateListing from './pages/CreateListing';
+import Sidebar from './components/Sidebar';
+import axios from 'axios';
+import './index.css';
+
+function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
+  return (
+    <Router>
+      <div className="flex h-screen bg-gray-100">
+        {isAuthenticated && <Sidebar />}
+        <div className="w-full p-6">
+          <Routes>
+            <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
+            <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />} />
+            <Route path="/listings" element={isAuthenticated ? <Listings /> : <Navigate to="/login" />} />
+            <Route path="/listings/edit/:id" element={isAuthenticated ? <EditListing /> : <Navigate to="/login" />} />
+            <Route path="/listings/create" element={isAuthenticated ? <CreateListing /> : <Navigate to="/login" />} />
+            <Route path="*" element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} />} />
+          </Routes>
+        </div>
+      </div>
+    </Router>
+  );
+}
+
+export default App;
+
+// Sidebar Component
+import { Link } from 'react-router-dom';
+
+function Sidebar() {
+  return (
+    <div className="w-64 bg-blue-900 text-white h-full p-4">
+      <h2 className="text-2xl font-bold mb-6">Admin Dashboard</h2>
+      <ul>
+        <li className="mb-4"><Link to="/dashboard">Dashboard</Link></li>
+        <li className="mb-4"><Link to="/listings">Manage Listings</Link></li>
+        <li className="mb-4"><Link to="/listings/create">Create Listing</Link></li>
+      </ul>
+    </div>
+  );
+}
+
+export default Sidebar;
+
+// Dashboard Page
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+
+function Dashboard() {
+  const [stats, setStats] = useState({ listings: 0 });
+
+  useEffect(() => {
+    axios.get('/api/listings/count')
+      .then(response => setStats({ listings: response.data.count }))
+      .catch(error => console.error(error));
+  }, []);
+
+  return (
+    <div>
+      <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
+      <p>Total Listings: {stats.listings}</p>
+    </div>
+  );
+}
+
+export default Dashboard;
+
+// Listings Page
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+
+function Listings() {
+  const [listings, setListings] = useState([]);
+
+  useEffect(() => {
+    axios.get('/api/listings')
+      .then(response => setListings(response.data))
+      .catch(error => console.error(error));
+  }, []);
+
+  return (
+    <div>
+      <h1 className="text-3xl font-bold mb-6">Manage Listings</h1>
+      <ul>
+        {listings.map(listing => (
+          <li key={listing.id} className="mb-4">
+            {listing.title} 
+            <Link to={`/listings/edit/${listing.id}`} className="text-blue-500 ml-4">Edit</Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default Listings;
+
+// Create Listing Page
+import { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
+function CreateListing() {
+  const [title, setTitle] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await axios.post('/api/listings', { title });
+    navigate('/listings');
+  };
+
+  return (
+    <div>
+      <h1 className="text-3xl font-bold mb-6">Create Listing</h1>
+      <form onSubmit={handleSubmit}>
+        <input 
+          type="text" 
+          value={title} 
+          onChange={(e) => setTitle(e.target.value)} 
+          placeholder="Listing Title" 
+          className="border p-2 w-full mb-4"
+        />
+        <button type="submit" className="bg-blue-500 text-white p-2">Create</button>
+      </form>
+    </div>
+  );
+}
+
+export default CreateListing;
+
+// Edit Listing Page
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useParams, useNavigate } from 'react-router-dom';
+
+function EditListing() {
+  const { id } = useParams();
+  const [title, setTitle] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios.get(`/api/listings/${id}`)
+      .then(response => setTitle(response.data.title))
+      .catch(error => console.error(error));
+  }, [id]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await axios.put(`/api/listings/${id}`, { title });
+    navigate('/listings');
+  };
+
+  return (
+    <div>
+      <h1 className="text-3xl font-bold mb-6">Edit Listing</h1>
+      <form onSubmit={handleSubmit}>
+        <input 
+          type="text" 
+          value={title} 
+          onChange={(e) => setTitle(e.target.value)} 
+          placeholder="Listing Title" 
+          className="border p-2 w-full mb-4"
+        />
+        <button type="submit" className="bg-blue-500 text-white p-2">Update</button>
+      </form>
+    </div>
+  );
+}
+
+export default EditListing;

@@ -7,12 +7,14 @@ import ExpertizePage from './components/pages/ExpertizePage';
 import FeatureListening from './components/pages/FeatureListening';
 import CarouselPage  from './components/pages/CarouselPage';
 import Footer from './components/pages/Footer';
+
 // import AddCard from './components/pages/AddCard';
 
 function App() {
   return (
     <Router>
       <Navbar />
+    
       {/* Other components */}
       <Home/>
       <AboutUs/>
