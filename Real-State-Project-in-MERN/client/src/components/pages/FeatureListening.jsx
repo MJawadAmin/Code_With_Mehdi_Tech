@@ -108,13 +108,13 @@ const FeatureListening = () => {
                             <button className='bg-blue-700 text-white w-full h-10 mt-4 rounded-md'>
                                 {service.stateprice}
                             </button>
-
+{/* 
                             <button 
     className='bg-red-600 text-white w-full h-10 mt-2 rounded-md'
     onClick={() => handleDelete(service._id)} // Fix: Use _id instead of id
 >
     Delete
-</button>
+</button> */}
 
                         </div>
                     ))}
