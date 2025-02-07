@@ -67,7 +67,7 @@ const ExpertizePage = () => {
     ]
   return (
     <div>
-        <div className='p-32 h-auto lg:h-[100vh] '>
+        <div className='p-32 h-auto  '>
             <div className='text-center  '>
             <p className='text-blue-500'>Expertize here </p>
             <h1 className='font text-3xl'>our Growing Agents</h1>

@@ -33,8 +33,10 @@ router.put("/update", updateAgent);
 router.get("/fetch", fetchAgents);
 
 // Card Routes
-router.post("/createcard", upload.single("stateimage"), addcard); // Updated to handle file upload
-router.delete("/removecard/:id", removecard);
+router.post("/createcard", upload.single("stataimage"), addcard); // Fix field name
+ // Updated to handle file upload
+ router.delete("/removecard/:id", removecard); 
+
 router.put("/updatecard", updatecard);
 router.get("/fetchcard", fetchcards);
 

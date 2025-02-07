@@ -37,24 +37,18 @@ function AddCard() {
           data.append("stataimage", formData.stataimage); // Image field handling
         }
       } else {
-        data.append(key, formData[key]); // All other form data
+        data.append(key, formData[key]?.toString() || ""); // Convert to string
       }
     });
-
-    // Debugging: Log FormData contents
-    for (let [key, value] of data.entries()) {
-      console.log(key, value);
-    }
 
     try {
       // Send form data with POST request to the backend
       const response = await axios.post("http://localhost:8080/api/createcard", data, {
         headers: {
-          "Content-Type": "multipart/form-data", // Ensure this is set correctly
+          "Content-Type": "multipart/form-data",
         },
       });
 
-      // Check if the request was successful
       if (response.data.status === "success") {
         alert("Card added successfully!");
         setFormData({
@@ -71,7 +65,7 @@ function AddCard() {
           stateprice: "",
         });
       } else {
-        alert("Failed to add card!");
+        alert("Failed to add card! Backend may not be receiving all fields.");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -80,13 +74,14 @@ function AddCard() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-lg p-6 mt-10">
+    <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-lg p-6 mt-96">
       <h2 className="text-2xl font-semibold text-center mb-6">Add New Card</h2>
 
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div className="grid grid-cols-2 gap-4">
           <input type="text" name="statename" placeholder="State Name" value={formData.statename} onChange={handleChange} required className="border p-2 rounded w-full" />
-          <input type="file" name="stataimage" accept="image/*" onChange={handleImageChange} required className="border p-2 rounded w-full" />
+          <input type="file" name="stataimage" accept="image/*" onChange={handleImageChange} required />
+
           <input type="text" name="statevalue" placeholder="For Sale / Rent" value={formData.statevalue} onChange={handleChange} required className="border p-2 rounded w-full" />
           <input type="text" name="stateplace" placeholder="Location" value={formData.stateplace} onChange={handleChange} required className="border p-2 rounded w-full" />
           <input type="text" name="statescale" placeholder="Size (e.g., 2350 Square Feet)" value={formData.statescale} onChange={handleChange} required className="border p-2 rounded w-full" />
