@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-function Cardform() {
+function AgentForm() {
   const [formData, setFormData] = useState({
     statename: "",
     stataimage: null,
@@ -127,4 +127,4 @@ function Cardform() {
   );
 }
 
-export default Cardform;
+export default AgentForm;

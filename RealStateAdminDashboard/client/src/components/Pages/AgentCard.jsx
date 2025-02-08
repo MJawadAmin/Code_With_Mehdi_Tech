@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { CiSearch } from "react-icons/ci";
 import axios from 'axios'; // Ensure AddCard component exists
-import Sidebar from './Sidebar';
-import AddCard from './Cardform';
+import AgentForm from './AgentForm';
 
 
 
 
-const Dashboard = () => {
+const AgentCard = () => {
     const [cards, setCards] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
 
@@ -154,4 +153,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default AgentCard;

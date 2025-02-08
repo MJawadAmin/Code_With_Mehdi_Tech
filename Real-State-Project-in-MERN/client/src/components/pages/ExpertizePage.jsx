@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { IoCallOutline } from "react-icons/io5";
 import axios from 'axios';
-import svgImage from '/svgImage.svg'
 
 
 
