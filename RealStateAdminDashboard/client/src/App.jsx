@@ -1,24 +1,18 @@
-
-import { useState, useEffect } from 'react';
-import './index.css';
-import { Sidebar } from 'react-pro-sidebar';
-import Dashboard from './components/pages/Dashboard';
-
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import LoginForm from "./components/Pages/LoginForm";
+import Dashboard from "./components/Pages/Dashboard";
 
 
-function App() {
-  
-
+const App = () => {
   return (
-    <div className='bg-sky-100 p-5 '>
- <Dashboard/>
-
- {/* <Sidebar/> */}
-
- </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LoginForm />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
-
-
