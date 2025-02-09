@@ -95,7 +95,7 @@ const Dashboard = () => {
                     {/* 🏠 Property Cards */}
                     <div className="flex flex-wrap justify-center gap-6 px-6 sm:px-10 md:px-16 lg:px-32 h-[100vh] overflow-y-scroll">
                         {cards.map((service, index) => (
-                            <div key={service._id} className="relative p-4 w-full sm:w-1/2 md:w-1/3 lg:w-[25%] border  overflow-hidden bg-white  rounded-lg shadow-md">
+                            <div key={service._id} className="relative p-4 w-full h-[75vh]  sm:w-1/2 md:w-1/3 lg:w-[25%] border  overflow-hidden bg-white  rounded-lg shadow-md">
                                 {/* 🏷 Property Label */}
                                 <div className="absolute top-2 left-2 bg-gray-900 text-white text-xs sm:text-sm md:text-base p-1 sm:p-2 rounded-md">
                                     {service.statevalue}
@@ -122,15 +122,15 @@ const Dashboard = () => {
                                 </div>
 
                                 <div className='flex justify-between text-xs sm:text-sm md:text-base'>
-                                    <p className='text-gray-600'>{service.statesbedroom}</p>
-                                    <p className='text-gray-600'>{service.statebatbrooms}</p>
+                                    <p className='text-gray-600'>{service.statesbedroom} Bedrooms</p>
+                                    <p className='text-gray-600'>{service.statebatbrooms} Baths</p>
                                 </div>
 
                                 <hr className='text-gray-400 w-full mt-3' />
 
                                 <div className='flex justify-between text-xs sm:text-sm md:text-base'>
                                     <p className='text-gray-600'>{service.statesalername}</p>
-                                    <p className='text-gray-600'>{service.daybefore}</p>
+                                    <p className='text-gray-600'>{service.daybefore} Days Before</p>
                                 </div>
 
                                 {/* Price Button */}

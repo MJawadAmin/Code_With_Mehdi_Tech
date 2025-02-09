@@ -75,7 +75,7 @@ const ExpertizePage = () => {
             
 
                  Database connected 
-                 <div className=' lg:flex gap-6 items-center h-[100vh] md:overflow-y-scroll lg:overflow-x-scroll lg:flex-row '>
+                 <div className=' lg:flex gap-6 items-center h-[100vh] md:overflow-y-scroll md:overflow-x-hidden lg:overflow-x-scroll lg:overflow-y-hidden lg:flex-row '>
                 {agents.map((services, index)=>(
                     <div key={index} className='relative '>
                         <img src="AgentImage.png" alt="img" />

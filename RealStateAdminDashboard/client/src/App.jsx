@@ -5,6 +5,7 @@ import { Sidebar } from 'react-pro-sidebar';
 import Dashboard from './components/pages/Dashboard';
 
 
+
 function App() {
   
 
@@ -13,6 +14,7 @@ function App() {
  <Dashboard/>
 
  {/* <Sidebar/> */}
+
  </div>
   );
 }
