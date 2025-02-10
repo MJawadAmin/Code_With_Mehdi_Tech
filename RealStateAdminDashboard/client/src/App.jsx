@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginForm from "./components/Pages/LoginForm";
 import Dashboard from './components/Pages/Dashboard'
 import ProtectedRoute from "./components/Pages/Protectedroute";
+import EditCard from "./components/Pages/EditCard";
 
 
 const App = () => {
@@ -10,11 +11,11 @@ const App = () => {
     <Router>
     <Routes>
       <Route path="/login" element={<LoginForm />} />
-      <Route path="/" element={<LoginForm />} />
-      
-      {/* Protect Dashboard Route */}
+
+      {/* Protected Route for Dashboard */}
       <Route element={<ProtectedRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/edit-card/:id" element={<EditCard/>}/>
       </Route>
     </Routes>
   </Router>

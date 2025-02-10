@@ -5,15 +5,17 @@ import {
   removeAgent,
   updateAgent,
   fetchAgents,
-  loginadmin,
-  logoutadmin,
+ 
 } from "../controller/agentController.js";
 import {
   addcard,
   fetchcards,
   removecard,
   updatecard,
+  loginadmin,
+  logoutadmin,
 } from "../controller/cardcontroller.js";
+
 
 const router = express.Router();
 
@@ -39,7 +41,7 @@ router.post("/createcard", upload.single("stataimage"), addcard); // Fix field n
  // Updated to handle file upload
  router.delete("/removecard/:id", removecard); 
 
- router.put("/updatecard/:id", updatecard);
+ router.put("/updatecard/:id",upload.single('stateimage') ,updatecard);
 
 router.get("/fetchcard", fetchcards);
 router.post('/login', loginadmin)

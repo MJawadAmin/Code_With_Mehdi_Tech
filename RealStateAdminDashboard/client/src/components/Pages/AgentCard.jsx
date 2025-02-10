@@ -1,156 +1,138 @@
-import React, { useEffect, useState } from 'react';
-import { CiSearch } from "react-icons/ci";
-import axios from 'axios'; // Ensure AddCard component exists
-import AgentForm from './AgentForm';
+import React, { useEffect, useState } from 'react'
+import { IoCallOutline } from "react-icons/io5";
+import axios from 'axios';
 
 
 
+const ExpertizePage = () => {
 
-const AgentCard = () => {
-    const [cards, setCards] = useState([]);
-    const [isOpen, setIsOpen] = useState(false);
+   const [agents, setAgents] = useState([]);
+  
 
-    const toggleButton = () => {
-        setIsOpen(!isOpen);
-    };
 
-    useEffect(() => {
-        const fetchCards = async () => {
-            try {
-                const cardResponse = await axios.get('http://localhost:8080/api/fetchcard');
-                if (cardResponse.data.status === 'success') {
-                    setCards(cardResponse.data.carddata);
-                } else {
-                    console.log('No cards found!');
-                }
-            } catch (error) {
-                console.error("Error fetching cards:", error);
-            }
-        };
-
-        fetchCards();
-    }, []);
-
-    const handleDelete = async (id) => {
-        if (!id) {
-            alert("Invalid card ID!");
-            return;
-        }
-
-        try {
-            console.log("Deleting ID:", id);
-            const response = await axios.delete(`http://localhost:8080/api/removecard/${id}`);
-
-            if (response.data.status === 'success') {
-                alert("Card deleted successfully!");
-                setCards(cards.filter(card => card._id !== id)); 
+    useEffect(()=>{
+        const fetchAgents =  async () =>{
+            const agentsResponse = await axios.get('http://localhost:8080/api/fetch');
+            if(agentsResponse.data.status === 'success'){
+                setAgents(agentsResponse.data.agentdata);
             } else {
-                alert("Failed to delete card: " + response.data.message);
+                console.log('Agents not found!')
+            
+                const showIfAgentNotAvailable=[{
+                    image:"AgentImage.png"
+                }]
             }
-        } catch (error) {
-            alert("Error deleting card. Please try again.");
-            console.error("Error deleting card:", error);
         }
-    };
 
-    return (
-        <div> <Sidebar/>
+        if(agents.length === 0){
+            fetchAgents();
+        }
+    },[])
 
-            {/*Search Input */}
-            <div className="relative w-96 mb-6 mx-auto ">
-             
-                <input
-                    type="search"
-                    className="h-10 w-full pl-10 pr-4 rounded-3xl bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="Search..."
-                />
-                <CiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 text-xl" />
+    // Testing by logging data in agents
+    useEffect(()=> {
+        console.log('Agents');
+    },[agents])
+ 
+    const AgentsDataObject= [
+        {
+            image:"AgentImage.png",
+            experience:"3 Years Experience",
+            name : "David Wing",
+            expertise: "Eco Builders",
+            contact: "+1234567890"
+        },
+        {
+            image:"AgentImage.png",
+            experience:"5 Years Experience",
+            name : "Mike Hue",
+            expertise: "Eco Builders",
+            contact: "+1234567890"
+        }, 
+        {
+            image:"AgentImage.png",
+            experience:"3 Years Experience",
+            name : "Ela Steven",
+            expertise: "Eco Builders",
+            contact: "+1234567890"
+        },
+        {
+            image:"AgentImage.png",
+            experience:"5 Years Experience",
+            name : "Billi Buther",
+            expertise: "Eco Builders",
+            contact: "+1234567890"
+        },
+    ]
+  return (
+    <div>
+        <div className='p-32 h-auto  '>
+            <div className='text-center  '>
+            <p className='text-blue-500'>Expertize here </p>
+            <h1 className='font text-3xl'>our Growing Agents</h1>
             </div>
+           
+            
 
-            {/*  Property Listings */}
-            <h1 className='text-3xl font-bold mb-4 text-center'>Properties</h1>
+                 Database connected 
+                 <div className=' lg:flex gap-6 items-center h-[100vh] md:overflow-y-scroll md:overflow-x-hidden lg:overflow-x-scroll lg:overflow-y-hidden lg:flex-row '>
+                {agents.map((services, index)=>(
+                    <div key={index} className='relative '>
+                        <img src="AgentImage.png" alt="img" />
+                        <div className='absolute bottom-40  text-blue-500'>
+                        <h2>{services.experience}</h2> 
+                        </div>
+                        <div className='p-6 '> 
+                            <h1 className='font text-2xl'>{services.name}</h1>
+                            <h3 >{services.company}</h3>
+                            <h3 className='font-semibold text-gray-400 flex items-center'><IoCallOutline className='text-blue-600' />Call:{services.number}</h3></div>
 
-            <div className=' flex flex-col items-center justify-center relative'>
-                {/* ➕ Add States Button */}
-                <button onClick={toggleButton} className='rounded-xl bg-blue-400 px-5 py-3 z-50'>
-                    Click me Add States
-                </button>
 
-                {/*  AddCard Modal */}
-                {isOpen && (
-                    <div className='absolute top-0 z-50 flex flex-col items-center bg-white p-5 shadow-lg'>
-                      <AddCard/>
-                        
-                        <button onClick={toggleButton} className='rounded-xl bg-red-400 px-5 py-3 z-50 mt-2'>Back</button>
                     </div>
-                )}
+                ))
+                   
+                
+                }
+                 </div>  </div></div>
 
-                <div className={`${isOpen ? "blur-md" : ""} w-full`}>
-                    <div className='p-10 text-center'>
-                        <h1 className='text-blue-500'>Featured Listings</h1>
-                        <h1 className='text-lg md:text-xl lg:text-2xl font-bold'>We Bring Your Dreams to Life</h1>
-                    </div>
 
-                    {/* 🏠 Property Cards */}
-                    <div className="flex flex-wrap justify-center gap-6 px-6 sm:px-10 md:px-16 lg:px-32 h-[100vh] overflow-y-scroll">
-                        {cards.map((service, index) => (
-                            <div key={service._id} className="relative p-4 w-full sm:w-1/2 md:w-1/3 lg:w-[25%] border  overflow-hidden bg-white  rounded-lg shadow-md">
-                                {/* 🏷 Property Label */}
-                                <div className="absolute top-2 left-2 bg-gray-900 text-white text-xs sm:text-sm md:text-base p-1 sm:p-2 rounded-md">
-                                    {service.statevalue}
-                                </div>
-
-                                {/* 🖼 Property Image */}
-                                <img 
-                                    src={`http://localhost:8080${service.stataimage}`} 
-                                    alt="property" 
-                                    className="w-full h-48 " 
-                                    onError={(e) => e.target.src = "fallback.jpg"} 
-                                />
-
-                                {/*  Property Details */}
-                                <div className="text-center mt-3">
-                                    <h1 className="text-sm sm:text-base md:text-lg font-bold">{service.statename}</h1>
-                                    <p className='text-xs sm:text-sm md:text-base text-gray-400'>{service.stateplace}</p>
-                                    <hr className='text-gray-400 w-full mt-3' />
-                                </div>
-
-                                <div className='flex justify-between mt-2 text-xs sm:text-sm md:text-base'>
-                                    <p className='text-gray-600'>{service.statescale}</p>
-                                    <p className='text-gray-600'>{service.stategarages}</p>
-                                </div>
-
-                                <div className='flex justify-between text-xs sm:text-sm md:text-base'>
-                                    <p className='text-gray-600'>{service.statesbedroom}</p>
-                                    <p className='text-gray-600'>{service.statebatbrooms}</p>
-                                </div>
-
-                                <hr className='text-gray-400 w-full mt-3' />
-
-                                <div className='flex justify-between text-xs sm:text-sm md:text-base'>
-                                    <p className='text-gray-600'>{service.statesalername}</p>
-                                    <p className='text-gray-600'>{service.daybefore}</p>
-                                </div>
-
-                                {/* Price Button */}
-                                <button className='bg-blue-700 text-white w-full h-10 mt-4 rounded-md'>
-                                    {service.stateprice}
-                                </button>
-
-                                {/* 🗑 Delete Button */}
-                                <button 
-                                    className='bg-red-600 text-white w-full h-10 mt-2 rounded-md'
-                                    onClick={() => handleDelete(service._id)}
-                                >
-                                    Delete
-                                </button>
-                            </div>
-                        ))}
-                    </div>
-                </div>
+/* <div className="flex flex-wrap justify-center gap-6 px-6 sm:px-10 md:px-16 lg:px-32">
+    {AgentsDataObject.map((services, index) => (
+        <div key={index} className="relative w-full sm:w-1/2 md:w-1/3 lg:w-auto">
+            <img src={services.image} alt="img" className="w-full h-auto rounded-lg" />
+            <div className="absolute bottom-20 lg:bottom-28 left-0 bg-gray-400 text-blue-500 text-sm sm:text-base md:text-lg p-2 ">
+                <h2>{services.experience}</h2>
+            </div>
+            <div className="mt-3 text-center">
+                <h1 className="text-lg sm:text-xl md:text-2xl font-bold">{services.name}</h1>
+                <h3 className="text-sm sm:text-base md:text-lg">{services.expertise}</h3>
+                <h3 className="font-semibold text-gray-400 flex items-center justify-center text-sm sm:text-base md:text-lg">
+                    <IoCallOutline className="text-blue-600 mr-2" /> Call: {services.contact}
+                </h3>
             </div>
         </div>
-    );
-};
+    ))}
+</div>
 
-export default AgentCard;
+<div className="h-auto md:h-[20vh] bg-[rgb(226,239,255)] w-[90%] sm:w-[85%] md:w-[80%] mx-auto flex flex-wrap md:flex-nowrap items-center justify-between p-6 sm:p-10 md:p-16 mt-20 sm:mt-32 md:mt-44 rounded-lg">
+    <img src={svgImage} alt="" className="w-16 sm:w-20 md:w-24 h-16 sm:h-20 md:h-24" />
+    <div className="text-center md:text-left">
+        <h1 className="text-lg sm:text-xl md:text-2xl font-bold">Become An Agent</h1>
+        <p className="text-xs sm:text-sm md:text-base text-gray-400">
+            Agent hen an unknown printer took a galley scramble
+        </p>
+    </div>
+    <button className="w-24 sm:w-28 h-10 bg-blue-600 text-white rounded-md mt-4 md:mt-0">
+        Join
+    </button>
+</div>
+
+
+
+      </div>      
+      
+    </div> */
+  )
+}
+
+export default ExpertizePage

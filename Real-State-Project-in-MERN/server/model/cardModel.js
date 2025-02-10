@@ -32,7 +32,7 @@ const cardSchema= new mongoose.Schema({
         type: String,
         require: true
     },
-    statebatbrooms:{
+    statebathrooms:{
         type: String,
         require: true
     },

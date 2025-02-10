@@ -59,7 +59,7 @@ function Cardform() {
           statescale: "",
           stategarages: "",
           statesbedroom: "",
-          statebatbrooms: "",
+          statebathrooms: "",
           statesalername: "",
           daybefore: "",
           stateprice: "",
@@ -85,7 +85,7 @@ function Cardform() {
           <input type="text" name="statescale" placeholder="Size (e.g., 2350 Square Feet)" value={formData.statescale} onChange={handleChange} required className="border p-2 rounded w-full" />
           <input type="text" name="stategarages" placeholder="Garages" value={formData.stategarages} onChange={handleChange} required className="border p-2 rounded w-full" />
           <input type="text" name="statesbedroom" placeholder="Bedrooms" value={formData.statesbedroom} onChange={handleChange} required className="border p-2 rounded w-full" />
-          <input type="text" name="statebatbrooms" placeholder="Bathrooms" value={formData.statebatbrooms} onChange={handleChange} required className="border p-2 rounded w-full" />
+          <input type="text" name="statebatbrooms" placeholder="Bathrooms" value={formData.statebathrooms} onChange={handleChange} required className="border p-2 rounded w-full" />
           <input type="text" name="statesalername" placeholder="Seller Name" value={formData.statesalername} onChange={handleChange} required className="border p-2 rounded w-full" />
           <input type="text" name="daybefore" placeholder="Days Ago (e.g., 1 day ago)" value={formData.daybefore} onChange={handleChange} required className="border p-2 rounded w-full" />
           <input type="text" name="stateprice" placeholder="Price (e.g., $5,304,000)" value={formData.stateprice} onChange={handleChange} required className="border p-2 rounded w-full" />
