@@ -24,7 +24,7 @@ function Cardform() {
     stategarages: /^\d+$/, // Only digits
     statesbedroom: /^\d+$/, // Only digits
     statebatbrooms: /^\d+$/, // Only digits
-    statesalername: /^\d+$/, // Only letters and spaces /^[A-Za-z\s]+$/,
+    statesalername: /^[A-Za-z\s]+$/, // Only letters and spaces /^[A-Za-z\s]+$/,
     daybefore: /^\d+$/,  // Example: "1 day ago", "3 days ago  /^\d+\s?(day|days) ago$/,"
     stateprice:  /^\d+$/,  // Price format e.g., $5,304,000 or 5304000 /^\$?\d{1,3}(,\d{3})*(\.\d{1,2})?$/,
   };
