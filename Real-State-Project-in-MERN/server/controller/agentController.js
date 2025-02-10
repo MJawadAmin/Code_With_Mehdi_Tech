@@ -1,22 +1,29 @@
 
 import AgentModel from "../model/agentModel.js"
 
+import jwt from "jsonwebtoken";
+
 const STATIC_EMAIL = "jjawadamn883@gmail.com";
 const STATIC_PASSWORD = "Jawadamin12";
+const SECRET_KEY = "your_secret_key"; // Use environment variables for security
 
 export const loginadmin = (req, res) => {
     const { email, password } = req.body;
   
     if (email === STATIC_EMAIL && password === STATIC_PASSWORD) {
-      return res.json({ message: "Login Successful" });
+        // Generate JWT Token
+        const token = jwt.sign({ role: "admin" }, SECRET_KEY, { expiresIn: "1h" });
+
+        return res.json({ message: "Login Successful", token });
     } else {
-      return res.status(401).json({ message: "Invalid email or password" });
+        return res.status(401).json({ message: "Invalid email or password" });
     }
-  };
-  export const logoutadmin= (req, res) => {
+};
+
+export const logoutadmin = (req, res) => {
     return res.json({ message: "Logout Successful" });
-  };
-  
+};
+
 
 
 

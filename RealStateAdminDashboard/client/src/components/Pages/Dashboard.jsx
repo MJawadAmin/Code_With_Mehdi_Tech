@@ -56,9 +56,11 @@ const Dashboard = () => {
 
     const handleLogout = async () => {
         try {
-            await axios.post('http://localhost:8080/api/logout'); // Call Logout API
-            localStorage.removeItem("auth"); // Remove user session
-            navigate("/login"); // Redirect to login page
+            await axios.post('http://localhost:8080/api/logout');
+            //  // Call Logout API
+                localStorage.removeItem("authToken");
+                navigate("/login");
+               // Redirect to login page
         } catch (error) {
             console.error("Logout failed:", error);
         }
