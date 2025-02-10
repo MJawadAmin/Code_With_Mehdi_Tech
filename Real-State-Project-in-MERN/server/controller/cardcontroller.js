@@ -99,48 +99,51 @@ export const addcard = async (req, res) => {
 
 
 
+export const updatecard = async (req, res) => {
+    try {
+        const { id } = req.params;
 
-export const updatecard = async ( req, res) => {
-    try{
-        const {cardId, newstateName,
-            newstatemage,
-            newstatevalue,
-            newstatePlace,
-            newstateScale,
-            newstateGarages,
-            newstateBedrooms,
-            newstateBathrooms,
-            newstateSalerName,
-            newdayBefore,
-            newstateprice}=req.body;
-        const card=await CardModel.findById(cardId);
-        if(!card){
-            return res.status(200).json({
-                status: ' failed',
-                message: 'Updation failed'
-            })
+        const updatedFields = {
+            statename: req.body.newstateName,
+            statevalue: req.body.newstatevalue,
+            stateplace: req.body.newstatePlace,
+            statescale: req.body.newstateScale,
+            stategarages: req.body.newstateGarages,
+            statesbedroom: req.body.newstateBedrooms,
+            statebatbrooms: req.body.newstateBathrooms,
+            statesalername: req.body.newstateSalerName,
+            daybefore: req.body.newdayBefore,
+            stateprice: req.body.newstateprice,
+        };
+
+        // If new image is uploaded, add it
+        if (req.file) {
+            updatedFields.stataimage = `/storage/${req.file.filename}`;
         }
-        else{
-            card.statename= newstateName;
-            agent.name= newname;
-            agent.company= newcompany;
-            agent.experience= newexperience;
-            agent.number= newnumber;
-            await agent.save();
-            return res.status(200).json({
-                status: 'succeed',
-                message: 'Agent data updated succesfully'
-            })
+
+        // Find and update card, then return the updated document
+        const updatedCard = await CardModel.findByIdAndUpdate(id, updatedFields, { new: true });
+
+        if (!updatedCard) {
+            return res.status(404).json({
+                status: 'failed',
+                message: 'Card not found',
+            });
         }
-    }catch(error){
-        console.log(error)
-        return res.json(200).json({
+
+        return res.status(200).json({
+            status: 'success',
+            message: 'Card updated successfully',
+            updatedCard, // Ensure frontend gets updated card data
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
             status: 'failed',
-            message:'Internal error'
-        })
-
+            message: 'Internal server error',
+        });
     }
-}
+};
 
 export const fetchcards =async (req, res) => {
     try{

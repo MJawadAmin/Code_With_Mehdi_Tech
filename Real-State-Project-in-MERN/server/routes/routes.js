@@ -5,6 +5,8 @@ import {
   removeAgent,
   updateAgent,
   fetchAgents,
+  loginadmin,
+  logoutadmin,
 } from "../controller/agentController.js";
 import {
   addcard,
@@ -37,7 +39,10 @@ router.post("/createcard", upload.single("stataimage"), addcard); // Fix field n
  // Updated to handle file upload
  router.delete("/removecard/:id", removecard); 
 
-router.put("/updatecard", updatecard);
+ router.put("/updatecard/:id", updatecard);
+
 router.get("/fetchcard", fetchcards);
+router.post('/login', loginadmin)
+router.post("/logout",logoutadmin)
 
 export default router;

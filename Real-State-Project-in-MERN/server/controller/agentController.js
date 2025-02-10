@@ -1,6 +1,25 @@
 
 import AgentModel from "../model/agentModel.js"
 
+const STATIC_EMAIL = "jjawadamn883@gmail.com";
+const STATIC_PASSWORD = "Jawadamin12";
+
+export const loginadmin = (req, res) => {
+    const { email, password } = req.body;
+  
+    if (email === STATIC_EMAIL && password === STATIC_PASSWORD) {
+      return res.json({ message: "Login Successful" });
+    } else {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+  };
+  export const logoutadmin= (req, res) => {
+    return res.json({ message: "Logout Successful" });
+  };
+  
+
+
+
 export const addAgent = async(req , res) => {
     try{ 
        const {photo ,name ,company , number , experience   }=req.body;

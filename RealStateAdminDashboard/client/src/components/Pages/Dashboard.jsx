@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { CiSearch } from "react-icons/ci";
-import axios from 'axios'; // Ensure AddCard component exists
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import Sidebar from './Sidebar';
 import AddCard from './Cardform';
-
-
 
 
 const Dashboard = () => {
     const [cards, setCards] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
+    const navigate = useNavigate(); // Initialize navigation
 
     const toggleButton = () => {
         setIsOpen(!isOpen);
@@ -54,12 +54,31 @@ const Dashboard = () => {
         }
     };
 
-    return (
-        <div> <Sidebar/>
+    const handleLogout = async () => {
+        try {
+            await axios.post('http://localhost:8080/api/logout'); // Call Logout API
+            localStorage.removeItem("auth"); // Remove user session
+            navigate("/login"); // Redirect to login page
+        } catch (error) {
+            console.error("Logout failed:", error);
+        }
+    };
 
-            {/*Search Input */}
+    return (
+        <div>
+            <Sidebar />
+            {/*  Logout Button */}
+            <div className="absolute top-5 right-5">
+                <button
+                    onClick={handleLogout}
+                    className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition"
+                >
+                    Logout
+                </button>
+            </div>
+
+            {/* Search Input */}
             <div className="relative w-96 mb-6 mx-auto ">
-             
                 <input
                     type="search"
                     className="h-10 w-full pl-10 pr-4 rounded-3xl bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -68,20 +87,19 @@ const Dashboard = () => {
                 <CiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 text-xl" />
             </div>
 
-            {/*  Property Listings */}
+            {/* Property Listings */}
             <h1 className='text-3xl font-bold mb-4 text-center'>Properties</h1>
 
             <div className=' flex flex-col items-center justify-center relative'>
-                {/* ➕ Add States Button */}
+                {/* Add States Button */}
                 <button onClick={toggleButton} className='rounded-xl bg-blue-400 px-5 py-3 z-50'>
                     Click me Add States
                 </button>
 
-                {/*  AddCard Modal */}
+                {/* AddCard Modal */}
                 {isOpen && (
                     <div className='absolute top-0 z-50 flex flex-col items-center bg-white p-5 shadow-lg'>
-                      <AddCard/>
-                        
+                        <AddCard />
                         <button onClick={toggleButton} className='rounded-xl bg-red-400 px-5 py-3 z-50 mt-2'>Back</button>
                     </div>
                 )}
@@ -92,24 +110,24 @@ const Dashboard = () => {
                         <h1 className='text-lg md:text-xl lg:text-2xl font-bold'>We Bring Your Dreams to Life</h1>
                     </div>
 
-                    {/* 🏠 Property Cards */}
+                    {/*  Property Cards */}
                     <div className="flex flex-wrap justify-center gap-6 px-6 sm:px-10 md:px-16 lg:px-32 h-[100vh] overflow-y-scroll">
                         {cards.map((service, index) => (
-                            <div key={service._id} className="relative p-4 w-full h-[75vh]  sm:w-1/2 md:w-1/3 lg:w-[25%] border  overflow-hidden bg-white  rounded-lg shadow-md">
+                            <div key={service._id} className="relative p-4 w-full h-[75vh] sm:w-1/2 md:w-1/3 lg:w-[25%] border overflow-hidden bg-white rounded-lg shadow-md">
                                 {/* 🏷 Property Label */}
                                 <div className="absolute top-2 left-2 bg-gray-900 text-white text-xs sm:text-sm md:text-base p-1 sm:p-2 rounded-md">
                                     {service.statevalue}
                                 </div>
 
-                                {/* 🖼 Property Image */}
-                                <img 
-                                    src={`http://localhost:8080${service.stataimage}`} 
-                                    alt="property" 
-                                    className="w-full h-48 " 
-                                    onError={(e) => e.target.src = "fallback.jpg"} 
+                                {/*  Property Image */}
+                                <img
+                                    src={`http://localhost:8080${service.stataimage}`}
+                                    alt="property"
+                                    className="w-full h-48 "
+                                    onError={(e) => e.target.src = "fallback.jpg"}
                                 />
 
-                                {/*  Property Details */}
+                                {/* Property Details */}
                                 <div className="text-center mt-3">
                                     <h1 className="text-sm sm:text-base md:text-lg font-bold">{service.statename}</h1>
                                     <p className='text-xs sm:text-sm md:text-base text-gray-400'>{service.stateplace}</p>
@@ -138,8 +156,8 @@ const Dashboard = () => {
                                     {service.stateprice}
                                 </button>
 
-                                {/* 🗑 Delete Button */}
-                                <button 
+                                {/* Delete Button */}
+                                <button
                                     className='bg-red-600 text-white w-full h-10 mt-2 rounded-md'
                                     onClick={() => handleDelete(service._id)}
                                 >
