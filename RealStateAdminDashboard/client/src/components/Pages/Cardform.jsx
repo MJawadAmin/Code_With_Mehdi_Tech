@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Cardform() {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     statename: "",
     stataimage: null,
@@ -67,6 +69,8 @@ function Cardform() {
 
       if (response.data.status === "success") {
         alert("Card added successfully!");
+      
+        // ✅ Ensure state update happens first before navigation
         setFormData({
           statename: "",
           stataimage: null,
@@ -80,6 +84,11 @@ function Cardform() {
           daybefore: "",
           stateprice: "",
         });
+      
+        setTimeout(() => {
+          navigate('/dashboard');
+        }, 100); 
+      
       } else {
         alert("Failed to add card! Backend may not be receiving all fields.");
       }

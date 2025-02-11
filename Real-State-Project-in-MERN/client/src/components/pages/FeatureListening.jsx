@@ -29,7 +29,7 @@ const FeaturedListings = () => {
         </div>
 
         <div className="gap-6 flex flex-col px-40 sm:px-10 place-items-center 
-        lg:flex lg:flex-row justify-center">
+        lg:flex lg:flex-row flex-wrap justify-center">
           {cards.map((service, index) => (
             <div key={index} className='relative p-4 w-full sm:w-1/2 md:w-1/3 lg:w-[25%]  border  overflow-hidden bg-white  rounded-lg shadow-md'>
               <div className='relative'>

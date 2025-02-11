@@ -22,13 +22,13 @@ const EditCard = () => {
     statename: /^[A-Za-z\s]+$/, // Only letters and spaces
     statevalue: /^[A-Za-z0-9\s,]+$/, // Must be exactly "For Sale" or "Rent"
     stateplace: /^[A-Za-z0-9\s,]+$/, // Letters, numbers, spaces, and commas
-    statescale: /^\d+\s?(Square Feet|sq ft|sqft)?$/, // Number + optional unit
+    statescale:  /^[A-Za-z0-9\s,]+$/, // Number + optional unit
     stategarages: /^\d+$/, // Only digits
     statesbedroom: /^\d+$/, // Only digits
     statebatbrooms: /^\d+$/, // Only digits
     statesalername: /^[A-Za-z\s]+$/, // Only letters and spaces
     daybefore: /^\d+$/, // Example: "3 days ago"
-    stateprice: /^\d+$/, // Only digits
+    stateprice: /^[\d$,€£₹]+$/, // Only digits
   };
 
   const [loading, setLoading] = useState(true);

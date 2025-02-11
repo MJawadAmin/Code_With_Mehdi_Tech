@@ -9,7 +9,7 @@ const Sidebar = () => {
     };
 
     return (
-        <div className="flex">
+        <div className="flex z-50">
             {/* Toggle Button */}
             <button
     onClick={toggleSidebar}

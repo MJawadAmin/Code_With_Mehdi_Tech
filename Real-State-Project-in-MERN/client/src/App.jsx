@@ -7,6 +7,7 @@ import ExpertizePage from './components/pages/ExpertizePage';
 import FeatureListening from './components/pages/FeatureListening';
 import CarouselPage  from './components/pages/CarouselPage';
 import Footer from './components/pages/Footer';
+import CSVReader from './components/pages/csv/CSVReader';
 
 // import AddCard from './components/pages/AddCard';
 
@@ -24,6 +25,7 @@ function App() {
       <FeatureListening/>
       {/* <FeatureListening/> */}
       <CarouselPage/>
+      <CSVReader/>
       <Footer/>
     </Router>
   );
