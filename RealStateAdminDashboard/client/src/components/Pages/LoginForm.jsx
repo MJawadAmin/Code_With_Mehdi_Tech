@@ -21,7 +21,7 @@ const LoginForm = () => {
         localStorage.setItem("authToken", randomToken); // Store unique token
         navigate("/dashboard"); // Redirect to dashboard
       } else {
-        setError("Invalid email or password");
+        setError("email or password error");
       }
     } catch (error) {
       setError("Something went wrong");
