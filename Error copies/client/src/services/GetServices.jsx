@@ -10,7 +10,7 @@ const GetServices = () => {
             const res = await axios.get(API)
             
         } catch (error) {
-            console.log("error messag :",error.message)
+            console.log("error message :",error.message)
             console.log("error status:", error.response.status);
             console.log("error  data:", error.response.data)
             
