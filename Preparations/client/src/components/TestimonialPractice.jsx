@@ -194,23 +194,15 @@
 
 
 import React, { useState } from 'react';
-import image1 from '../../public/image1.png'
-import image2 from '../../public/image2.png'
-import image3 from '../../public/image3.png'
-import image4 from '../../public/image4.png'
-import image5 from '../../public/image5.png'
-import image6 from '../../public/image6.png'
-import image7 from '../../public/image7.png'
-
 const TestimonialPractice = () => {
   const detailsAndImages = [
-    { image: image1, name: 'John Doe', age: 23, from: 'Mardan' },
-    { image: image2, name: 'Jane Smith', age: 25, from: 'Peshawar' },
-    { image: image3, name: 'Alice Johnson', age: 30, from: 'Islamabad' },
-    { image:image4, name: 'Bob Martin', age: 28, from: 'Karachi' },
-    { image:image5, name: 'Charlie Brown', age: 32, from: 'Lahore' },
-    { image: image6, name: 'David Wilson', age: 29, from: 'Quetta' },
-    { image:image7, name: 'Emma Watson', age: 27, from: 'Faisalabad' },
+    { image:'image1.png' , name: 'John Doe', age: 23, from: 'Mardan' },
+    { image: 'image2.png', name: 'Jane Smith', age: 25, from: 'Peshawar' },
+    { image: 'image3.png', name: 'Alice Johnson', age: 30, from: 'Islamabad' },
+    { image:'image4.png', name: 'Bob Martin', age: 28, from: 'Karachi' },
+    { image:'image5.png', name: 'Charlie Brown', age: 32, from: 'Lahore' },
+    { image: 'image6.png', name: 'David Wilson', age: 29, from: 'Quetta' },
+    { image:'image7.png', name: 'Emma Watson', age: 27, from: 'Faisalabad' },
   ];
 
   const [selectedPerson, setSelectedPerson] = useState(detailsAndImages[0]); // Default to first person
