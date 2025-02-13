@@ -31,7 +31,7 @@
 // console.log(isPrime(10))
 
 // reverse string 
-// function reversestring(str){
-//     return str.split('').reverse().join('')
-// }
-// console.log(reversestring('Hello'))
+function reversestring(str){
+    return str.split('').reverse().join('')
+}
+console.log(reversestring('Hello'))
