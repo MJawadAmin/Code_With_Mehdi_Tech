@@ -6,6 +6,7 @@ import Practice from './components/Practice'
 import AddItem from './components/AddItem'
 import Practice2 from './components/Practice2'
 import PracticeWithSelect from './components/PracticeWithSelect'
+import TodoList from './components/todoApp/TodoList'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -17,6 +18,7 @@ function App() {
      <Practice/> */} 
      {/* <Practice2/> */}
      <PracticeWithSelect/>
+     <TodoList/>
     </>
   )
 }

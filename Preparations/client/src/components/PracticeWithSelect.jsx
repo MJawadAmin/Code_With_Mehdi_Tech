@@ -45,13 +45,25 @@ const handleChange=(e)=>{
 </select> */}
 {details.map((service , index)=>(
     <ul key={index}>
-<li onClick={()=>handleChange(service)}>{service.name} </li>
+<li
+  onClick={() => handleChange(service)}
+  tabIndex={0} // Makes it focusable
+  className="cursor-pointer p-2 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+>
+  {service.name}
+</li>
+
     </ul>
 ))}
        
-       <div>{select.name}
-        {select.age}
-       </div>
+       <div class="grid h-screen place-items-center">
+  <div class="place-self-center bg-blue-500 text-white p-4">I'm centered
+  {select.name}
+  {select.age}
+  </div>
+</div>
+
+     
        </>
     );
 };
