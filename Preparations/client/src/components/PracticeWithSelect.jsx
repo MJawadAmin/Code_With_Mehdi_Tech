@@ -30,39 +30,29 @@ const PracticeWithSelect = () => {
         { name: 'Zeeshan', age: 22, image: 'image5.png', from: 'Gilgit' },
         { name: 'Yousaf', age: 23, image: 'image6.png', from: 'Islamabad' },
     ];
+const [select , setSelect]= useState(details[0]);
+const handleChange=(e)=>{
+   setSelect(e)
+}
 
-    const [selectedPerson, setSelectedPerson] = useState(details[0]);
-
-    const handleSelect = (e) => {
-        setSelectedPerson(details[e.target.value]); // Get the selected person from the array
-    };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen">
-            {/* Dropdown Select */}
-            <select
-                onChange={handleSelect}
-                className="block w-[50%] p-2 border bg-gray-200 hover:bg-gray-300"
-            >
-                {details.map((detail, index) => (
-                    <option key={index} value={index}>
-                        {detail.name}
-                    </option>
-                ))}
-            </select>
-
-            {/* Display Selected Person */}
-            <div className="mt-5 text-center border p-4 shadow-lg w-[50%] bg-gray-100 rounded-lg">
-                <img
-                    src={selectedPerson.image} 
-                    alt={selectedPerson.name}
-                    className="h-[200px] w-[200px] mx-auto rounded-full"
-                />
-                <h1 className="text-xl font-bold mt-2">{selectedPerson.name}</h1>
-                <h2 className="text-gray-700">{selectedPerson.age} years old</h2>
-                <p className="text-gray-500">From {selectedPerson.from}</p>
-            </div>
-        </div>
+       <>
+{/* <select name="" id="" onChange={handleChange}>
+    {details.map((service , index)=>(
+        <option key={index} value={index}>{service.name}</option>
+    ))}
+</select> */}
+{details.map((service , index)=>(
+    <ul key={index}>
+<li onClick={()=>handleChange(service)}>{service.name} </li>
+    </ul>
+))}
+       
+       <div>{select.name}
+        {select.age}
+       </div>
+       </>
     );
 };
 
