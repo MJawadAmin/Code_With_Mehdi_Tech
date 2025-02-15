@@ -1,20 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const TodoList = () => {
   const [task, setTask] = useState("");
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState(() => {
+    // Load todos from local storage when the component mounts
+    const savedTodos = localStorage.getItem("todos");
+    return savedTodos ? JSON.parse(savedTodos) : [];
+  });
+
+  // Save todos to local storage whenever they change
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   const handleInputChange = (e) => setTask(e.target.value);
 
   const addTodo = () => {
     if (task.trim()) {
-      setTodos([...todos, { id: Date.now(), text: task }]);
+      setTodos((prevTodos) => {
+        const newTodos = [...prevTodos, { id: Date.now(), text: task }];
+        localStorage.setItem("todos", JSON.stringify(newTodos)); // Update storage immediately
+        return newTodos;
+      });
       setTask("");
     }
   };
 
   const deleteTodo = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
+    setTodos((prevTodos) => {
+      const updatedTodos = prevTodos.filter((todo) => todo.id !== id);
+      localStorage.setItem("todos", JSON.stringify(updatedTodos)); // Update storage immediately
+      return updatedTodos;
+    });
   };
 
   return (
