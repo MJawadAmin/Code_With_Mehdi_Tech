@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const TodoApp = () => {
+const TodoApp = (props) => {
   const [task, setTask] = useState(""); // Stores the input field value
   const [tasks, setTasks] = useState([]); // Stores the list of tasks
 
@@ -52,6 +52,7 @@ const TodoApp = () => {
             {t} <button onClick={() => deleteTask(index)}>Delete</button>
           </li>
         ))}
+        <li>{props.name}</li>
       </ul>
     </div>
   );

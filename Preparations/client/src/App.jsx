@@ -15,12 +15,14 @@ import TimerComponent from './components/useEffect/TimerComponent'
 import DataFetcher from './components/useEffect/DataFetcher'
 import Form from './components/todoApp/Form'
 import Todo1 from './components/todoApp/Todo1'
+import Todo2 from './components/todoApp/Todo2'
 
 function App() {
 
   return (
     <>
-    <Todo1/>
+    <Todo2/>
+    {/* <Todo1 name='Jawad Amin'/> */}
     {/* <div className='h-[100vh]'> <Form/>
     </div> */}
     {/* <div>
