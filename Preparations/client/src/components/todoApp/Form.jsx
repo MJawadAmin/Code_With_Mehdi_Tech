@@ -1,52 +1,54 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from "react";
 
-const Form = () => {
-  const [name, setName] = useState('');
-  const [names, setNames] = useState([]);
+const TodoApp = () => {
+  const [task, setTask] = useState(""); // For input value
+  const [tasks, setTasks] = useState([]); // To store the list of tasks
 
+  // Load tasks from localStorage when the component mounts
   useEffect(() => {
-    const localNames = JSON.parse(localStorage.getItem('names')) || [];
-    setNames(localNames);
+    const storedTasks = JSON.parse(localStorage.getItem("tasks"));
+    if (storedTasks) {
+      setTasks(storedTasks);
+    }
   }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (name.trim() === '') return;
+  // Save tasks to localStorage whenever 'tasks' change
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
-    const updatedNames = [...names, name];
-    setNames(updatedNames);
-    localStorage.setItem('names', JSON.stringify(updatedNames));
-    setName('');
+  // Function to add a task
+  const addTask = (e) => {
+    e.preventDefault(); // Prevent form refresh
+    if (task.trim() === "") return; // Prevent adding empty tasks
+    const updatedTasks = [...tasks, task]; // Add new task to the list
+    setTasks(updatedTasks); // Update state
+    setTask(""); // Clear input field
   };
 
-  const handleDelete = (index) => {
-    const updatedNames = names.filter((_, i) => i !== index);
-    setNames(updatedNames);
-    localStorage.setItem('names', JSON.stringify(updatedNames));
+  // Function to delete a task
+  const deleteTask = (index) => {
+    const newTasks = tasks.filter((_, i) => i !== index); // Remove selected task
+    setTasks(newTasks); // Update tasks
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <label>
-          <input
-            type="text"
-            placeholder="Enter Item"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </label>
-        <button className="bg-blue-100" type="submit">
-          Add
-        </button>
+      <h2>Simple To-Do App</h2>
+      <form onSubmit={addTask}>
+        <input
+          type="text"
+          value={task}
+          onChange={(e) => setTask(e.target.value)}
+          placeholder="Enter a task"
+        />
+        <button type="submit">Add</button>
       </form>
-
-      <h2>Names List:</h2>
+      
       <ul>
-        {names.map((item, index) => (
+        {tasks.map((t, index) => (
           <li key={index}>
-            {item}
-            <button onClick={() => handleDelete(index)}>Delete</button>
+            {t} <button onClick={() => deleteTask(index)}>Delete</button>
           </li>
         ))}
       </ul>
@@ -54,4 +56,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default TodoApp;
