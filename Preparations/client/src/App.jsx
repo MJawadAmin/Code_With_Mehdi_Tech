@@ -12,34 +12,41 @@ import MOuseMover from './components/useEffect/MOuseMover'
 import UseEffect1 from './components/useEffect/useEffect1'
 import LoggerComponent from './components/useEffect/LoggerComponent'
 import TimerComponent from './components/useEffect/TimerComponent'
+import DataFetcher from './components/useEffect/DataFetcher'
+import Form from './components/todoApp/Form'
 
 function App() {
 
   return (
     <>
-    <div className='h-[100vh]'>
+    <div className='h-[100vh]'> <Form/>
+    </div>
+    {/* <div>
+      <DataFetcher/>
+    </div> */}
+    {/* <div className='h-[100vh]'>
       <TimerComponent/>
-    </div>
-     <div className='h-[100vh]'>
+    </div> */}
+     {/* <div className='h-[100vh]'>
       <LoggerComponent/>
-     </div>
-     <div className='h-[100vh]'>
+     </div> */}
+     {/* <div className='h-[100vh]'>
   <UseEffect1/>
-    </div>
+    </div> */}
     {/* <div className='h-[100vh]'>
    <MOuseMover/>
 
     </div> */}
-    <div className='h-[100vh]'>
+    {/* <div className='h-[100vh]'>
       <UseEffectPractice/>
 
-    </div>
+    </div> */}
     {/* <AddItem/>
      {/* <TestimonialPractice/>       
      <Practice/> */} 
      {/* <Practice2/> */}
-     <PracticeWithSelect/>
-     <TodoList/>
+     {/* <PracticeWithSelect/>
+     <TodoList/> */}
     </>
   )
 }
