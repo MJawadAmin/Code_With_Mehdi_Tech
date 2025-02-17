@@ -16,12 +16,14 @@ import DataFetcher from './components/useEffect/DataFetcher'
 import Form from './components/todoApp/Form'
 import Todo1 from './components/todoApp/Todo1'
 import Todo2 from './components/todoApp/Todo2'
+import Event1 from './components/eventPractices/event1'
 
 function App() {
 
   return (
     <>
-    <Todo2/>
+    <Event1/>
+    {/* <Todo2/> */}
     {/* <Todo1 name='Jawad Amin'/> */}
     {/* <div className='h-[100vh]'> <Form/>
     </div> */}
