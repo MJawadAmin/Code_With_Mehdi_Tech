@@ -2,18 +2,21 @@ import React, { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-// import Sidebar from "./Sidebar";
 import AddCard from "./Cardform";
 import AgentCard from "./AgentCard";
 
 const Dashboard = () => {
   const [cards, setCards] = useState([]);
-  const [filteredCards, setFilteredCards] = useState([]); // State for filtered results
-  const [searchQuery, setSearchQuery] = useState(""); // State for search input
+  const [filteredCards, setFilteredCards] = useState([]); 
+  const [searchQuery, setSearchQuery] = useState(""); 
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
-  const toggleButton = () => {
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const cardsPerPage = 3; // Show only 3 cards per page
+
+  const toggleAddCard = () => {
     setIsOpen(!isOpen);
   };
 
@@ -23,7 +26,7 @@ const Dashboard = () => {
         const response = await axios.get("http://localhost:8080/api/fetchcard");
         if (response.data.status === "success") {
           setCards(response.data.carddata);
-          setFilteredCards(response.data.carddata); // Initialize filtered list
+          setFilteredCards(response.data.carddata);
         } else {
           console.log("No cards found!");
         }
@@ -34,16 +37,15 @@ const Dashboard = () => {
     fetchCards();
   }, []);
 
-  // Handle search input change
   const handleSearch = (event) => {
     const query = event.target.value.toLowerCase();
     setSearchQuery(query);
 
-    // Filter cards based on search query
     const filtered = cards.filter((card) =>
       card.statename.toLowerCase().includes(query)
     );
     setFilteredCards(filtered);
+    setCurrentPage(1);
   };
 
   const handleDelete = async (id) => {
@@ -76,19 +78,29 @@ const Dashboard = () => {
     }
   };
 
+  // Pagination Logic
+  const totalPages = Math.ceil(filteredCards.length / cardsPerPage);
+  const paginationNumbers = [];
+  for (let i = 1; i <= totalPages; i++) {
+    if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+      paginationNumbers.push(i);
+    } else if (paginationNumbers[paginationNumbers.length - 1] !== "...") {
+      paginationNumbers.push("...");
+    }
+  }
+
+  const indexOfLastCard = currentPage * cardsPerPage;
+  const indexOfFirstCard = indexOfLastCard - cardsPerPage;
+  const currentCards = filteredCards.slice(indexOfFirstCard, indexOfLastCard);
+
   return (
-    <div>
-      {/* Logout Button */}
+    <div className="p-6">
       <div className="absolute top-5 right-5">
-        <button
-          onClick={handleLogout}
-          className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition"
-        >
+        <button onClick={handleLogout} className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">
           Logout
         </button>
       </div>
 
-      {/* Search Bar */}
       <div className="relative w-96 mb-6 mt-10 mx-auto">
         <input
           type="search"
@@ -101,95 +113,47 @@ const Dashboard = () => {
       </div>
 
       <h1 className="text-3xl font-bold mb-4 text-center">Properties</h1>
-      <div className="flex flex-col items-center justify-center relative">
-        <button onClick={toggleButton} className="rounded-xl bg-blue-400 px-5 py-3 z-50">
-          Add Property
-        </button>
+      <div className="flex justify-center">
+  <button onClick={toggleAddCard} className="bg-blue-500 text-white px-4 py-2 rounded-lg mb-4">
+    Toggle Add Card
+  </button>
+</div>
+      {isOpen && <AddCard />}
 
-        {/* Add Card Form */}
-        {isOpen && (
-          <div className="absolute top-0 z-50 flex flex-col items-center bg-white p-5 shadow-lg">
-            <AddCard />
-            <button onClick={toggleButton} className="rounded-xl bg-red-400 px-5 py-3 mt-2">
-              Close
-            </button>
-          </div>
+      <div className="flex flex-wrap justify-center gap-6 px-6">
+        {currentCards.length > 0 ? (
+          currentCards.map((service) => (
+            <div key={service._id} className="p-4 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 border bg-white rounded-lg shadow-md">
+              <img
+                src={`http://localhost:8080${service.stataimage}`}
+                alt="property"
+                className="w-full h-48 object-cover"
+                onError={(e) => (e.target.src = "fallback.jpg")}
+              />
+              <div className="text-center mt-3">
+                <h1 className="text-lg font-bold">{service.statename}</h1>
+                <p className="text-gray-400">{service.stateplace}</p>
+              </div>
+              <button className="bg-blue-700 text-white w-full h-10 mt-4 rounded-md">
+                {service.stateprice}
+              </button>
+              <button className="bg-yellow-600 text-white w-full h-10 mt-2 rounded-md" onClick={() => navigate(`/edit-card/${service._id}`)}>
+                Update
+              </button>
+              <button className="bg-red-600 text-white w-full h-10 mt-2 rounded-md" onClick={() => handleDelete(service._id)}>
+                Delete
+              </button>
+            </div>
+          ))
+        ) : (
+          <p className="text-gray-600 text-lg">No matching properties found.</p>
         )}
+      </div>
 
-        {/* Listings */}
-        <div className={`${isOpen ? "blur-md" : ""} w-full`}>
-          <div className="p-10 text-center">
-            <h1 className="text-blue-500">Featured Listings</h1>
-            <h1 className="text-lg md:text-xl lg:text-2xl font-bold">We Bring Your Dreams to Life</h1>
-          </div>
-
-          <div className="flex flex-wrap justify-center gap-6 px-6 sm:px-10 md:px-16 lg:px-32 h-[100vh] overflow-y-scroll">
-            {filteredCards.length > 0 ? (
-              filteredCards.map((service) => (
-                <div key={service._id} className="relative p-4 w-full h-[80vh] sm:w-1/2 md:w-1/3 lg:w-[25%] border bg-white rounded-lg shadow-md">
-                  {/* Property State */}
-                  <div className="absolute top-2 left-2 bg-gray-900 text-white text-xs sm:text-sm md:text-base p-1 sm:p-2 rounded-md">
-                    {service.statevalue}
-                  </div>
-
-                  {/* Property Image */}
-                  <img
-                    src={`http://localhost:8080${service.stataimage}`} // Ensure correct URL
-                    alt="property"
-                    className="w-full h-48 object-cover"
-                    onError={(e) => (e.target.src = "fallback.jpg")}
-                  />
-
-                  {/* Property Details */}
-                  <div className="text-center mt-3">
-                    <h1 className="text-sm sm:text-base md:text-lg font-bold">{service.statename}</h1>
-                    <p className="text-xs sm:text-sm md:text-base text-gray-400">{service.stateplace}</p>
-                    <hr className="text-gray-400 w-full mt-3" />
-                  </div>
-
-                  {/* Additional Info */}
-                  <div className="flex justify-between mt-2 text-xs sm:text-sm md:text-base">
-                    <p className="text-gray-600">{service.statescale}</p>
-                    <p className="text-gray-600">{service.stategarages}</p>
-                  </div>
-                  <div className="flex justify-between text-xs sm:text-sm md:text-base">
-                    <p className="text-gray-600">{service.statesbedroom}</p>
-                    <p className="text-gray-600">{service.statebatbrooms} Baths</p>
-                  </div>
-
-                  <hr className="text-gray-400 w-full mt-3" />
-
-                  {/* Seller Info */}
-                  <div className="flex justify-between text-xs sm:text-sm md:text-base">
-                    <p className="text-gray-600">{service.statesalername}</p>
-                    <p className="text-gray-600">{service.daybefore} </p>
-                  </div>
-
-                  {/* Price Button */}
-                  <button className="bg-blue-700 text-white w-full h-10 mt-4 rounded-md">
-                    {service.stateprice}
-                  </button>
-
-                  {/* Update & Delete Buttons */}
-                  <button
-                    className="bg-yellow-600 text-white w-full h-10 mt-2 rounded-md"
-                    onClick={() => navigate(`/edit-card/${service._id}`)}
-                  >
-                    Update
-                  </button>
-                  <button
-                    className="bg-red-600 text-white w-full h-10 mt-2 rounded-md"
-                    onClick={() => handleDelete(service._id)}
-                  >
-                    Delete
-                  </button>
-                </div>
-              ))
-            ) : (
-              <p className="text-gray-600 text-lg">No matching properties found.</p>
-            )}
-          </div>
-        </div>
+      <div className="flex justify-center mt-6 space-x-2">
+        {paginationNumbers.map((num, index) => (
+          <button key={index} onClick={() => typeof num === 'number' && setCurrentPage(num)} className={`px-4 py-2 ${currentPage === num ? "bg-blue-500 text-white" : "bg-gray-300"} rounded-md`}>{num}</button>
+        ))}
       </div>
       <AgentCard />
     </div>

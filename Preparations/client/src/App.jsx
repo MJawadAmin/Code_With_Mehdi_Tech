@@ -17,12 +17,14 @@ import Form from './components/todoApp/Form'
 import Todo1 from './components/todoApp/Todo1'
 import Todo2 from './components/todoApp/Todo2'
 import Event1 from './components/eventPractices/event1'
+import EventforColor from './components/eventPractices/EventforColor'
 
 function App() {
 
   return (
     <>
-    <Event1/>
+    <EventforColor/>
+    {/* <Event1/> */}
     {/* <Todo2/> */}
     {/* <Todo1 name='Jawad Amin'/> */}
     {/* <div className='h-[100vh]'> <Form/>
