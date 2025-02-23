@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Papa from 'papaparse';
 
 function Cardform() {
   const navigate = useNavigate()
+  const [data , setData]= useState([])
   const [formData, setFormData] = useState({
     statename: "",
     stataimage: null,
@@ -30,6 +32,16 @@ function Cardform() {
     daybefore: /^\d+$/,  // Example: "1 day ago", "3 days ago  /^\d+\s?(day|days) ago$/,"
     stateprice:  /^\d+$/,  // Price format e.g., $5,304,000 or 5304000 /^\$?\d{1,3}(,\d{3})*(\.\d{1,2})?$/,
   };
+  const handleFileUplaod =(e)=>{
+    const file= e.target.files[0]
+    Papa.parse(file,{
+      header: true,
+      complete: (results)=>{
+        setData(results.data)
+      }
+    })
+
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -114,6 +126,7 @@ function Cardform() {
           <input type="text" name="statesalername" placeholder="Seller Name" value={formData.statesalername} onChange={handleChange} required className="border p-2 rounded w-full" />
           <input type="text" name="daybefore" placeholder="Days Ago (e.g., 1 day ago)" value={formData.daybefore} onChange={handleChange} required className="border p-2 rounded w-full" />
           <input type="text" name="stateprice" placeholder="Price (e.g., $5,304,000)" value={formData.stateprice} onChange={handleChange} required className="border p-2 rounded w-full" />
+          <input type="file" name="statefiles" placeholder="Files" value={formData.stateprice} onChange={handleFileUplaod} required className="border p-2 rounded w-full" />
         </div>
         <div className="flex items-center justify-center w-full mt-4">
           <label className="flex flex-col items-center px-4 py-6 bg-white border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 hover:bg-gray-100 transition">
